@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,9 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				highlight: "#0DC66D",
+				tech: "#4DE9BA",
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -84,12 +87,87 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'glow': {
+					'0%, 100%': { 
+						opacity: '0.7',
+						boxShadow: '0 0 20px rgba(13, 198, 109, 0.3), 0 0 60px rgba(13, 198, 109, 0.1)'
+					},
+					'50%': { 
+						opacity: '1',
+						boxShadow: '0 0 30px rgba(13, 198, 109, 0.6), 0 0 100px rgba(13, 198, 109, 0.2)'
+					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fade-in-right': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(-20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)'
+					}
+				},
+				'reveal-text': {
+					'0%': {
+						'clip-path': 'polygon(0 0, 0 0, 0 100%, 0% 100%)',
+					},
+					'100%': {
+						'clip-path': 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+					},
+				},
+				'shine': {
+					'0%': { 
+						backgroundPosition: '200% 0' 
+					},
+					'100%': { 
+						backgroundPosition: '-200% 0' 
+					},
+				},
+				'float': {
+					'0%': {
+						transform: 'translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateY(-10px)'
+					},
+					'100%': {
+						transform: 'translateY(0px)'
+					}
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'glow': 'glow 3s ease-in-out infinite',
+				'fade-in': 'fade-in 0.7s ease-out forwards',
+				'fade-in-right': 'fade-in-right 0.7s ease-out forwards',
+				'reveal-text': 'reveal-text 1s ease forwards',
+				'shine': 'shine 8s ease-in-out infinite',
+				'float': 'float 3s ease-in-out infinite',
+			},
+			fontFamily: {
+				'sans': ['Inter', 'sans-serif'],
+				'mono': ['JetBrains Mono', 'monospace'],
+			},
+			fontSize: {
+				'2xs': '0.625rem',
+			},
+			backgroundImage: {
+				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+				'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+				'glow-gradient': 'linear-gradient(90deg, transparent, rgba(13, 198, 109, 0.8), transparent)',
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
