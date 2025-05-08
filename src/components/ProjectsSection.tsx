@@ -6,15 +6,15 @@ const projects = [
   {
     title: "EduKeeper",
     description: "EduKeeper est une application web qui permet aux utilisateurs de stocker, organiser et résumer automatiquement leurs documents grâce à l'IA.",
-    image: "/lovable-uploads/20ddb31a-953c-4985-860e-cc010cdf1c83.png",
+    image: "/lovable-uploads/6839c80a-16ad-41dc-8771-de01dadd9c41.png",
     tech: ["React", "Node.js", "MongoDB", "Express"],
     link: "https://www.edukeeper.fr",
     featured: true
   },
   {
-    title: "Airse Climate Solutions",
+    title: "AirSE",
     description: "Site vitrine professionnel présentant les services de climatisation et ventilation d'AirSE, avec formulaire, carte et photos réelles.",
-    image: "/lovable-uploads/4bf3d02c-e4ae-4c6e-9c05-b51af78cab4e.png",
+    image: "/lovable-uploads/e584ef3a-49c3-4178-b892-ee6618f826c9.png",
     tech: ["Vue.js", "D3.js", "Python", "FastAPI"],
     link: "https://airse.fr",
     featured: true
@@ -68,7 +68,11 @@ const ProjectsSection = () => {
   return (
     <section id="projects" ref={sectionRef} className="py-20 md:py-32 bg-gradient-to-b from-background to-card/70">
       <div className="container mx-auto px-4">
-        <h2 className="section-heading mb-16 text-center mx-auto">Réalisations</h2>
+        <h2 className="section-heading mb-6 text-center mx-auto">Réalisations</h2>
+        
+        <p className="text-center text-lg mb-16 max-w-3xl mx-auto text-muted-foreground">
+          Chaque projet est une réponse sur-mesure à un besoin réel — design soigné, performances garanties, livrés en un temps record.
+        </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
           {projects.filter(p => p.featured).map((project, index) => (
