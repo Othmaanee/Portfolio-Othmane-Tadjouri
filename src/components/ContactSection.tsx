@@ -1,18 +1,11 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Mail, Phone, Send } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
   const { toast } = useToast();
   const sectionRef = useRef<HTMLElement>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    project: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,55 +34,6 @@ const ContactSection = () => {
       }
     };
   }, []);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      // Utiliser Formspree pour l'envoi du formulaire sans redirection
-      const response = await fetch('https://formspree.io/f/tadjouriothmane@gmail.com', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (response.ok) {
-        toast({
-          title: "Message envoyé avec succès",
-          description: "Merci ! Je vous répondrai dès que possible.",
-        });
-        
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          project: '',
-          message: ''
-        });
-      } else {
-        throw new Error('Une erreur est survenue.');
-      }
-    } catch (error) {
-      toast({
-        title: "Erreur d'envoi",
-        description: "Veuillez réessayer ou me contacter directement par email.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <section id="contact" ref={sectionRef} className="py-20 md:py-32 bg-gradient-to-b from-card/70 to-background relative">
@@ -140,15 +84,22 @@ const ContactSection = () => {
             </div>
             
             <div className="reveal-on-scroll">
-              <form onSubmit={handleSubmit} className="glowing-border p-6 bg-card/80 backdrop-blur-sm">
+              <form 
+                action="https://formsubmit.co/tadjouriothmane@gmail.com" 
+                method="POST" 
+                className="glowing-border p-6 bg-card/80 backdrop-blur-sm"
+              >
+                {/* Champs cachés pour formsubmit.co */}
+                <input type="hidden" name="_subject" value="Nouveau message depuis votre portfolio" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value={window.location.origin + "/#contact?message=success"} />
+                
                 <div className="mb-6">
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Nom</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    value={formData.name}
-                    onChange={handleChange}
                     required
                     className="form-input"
                     placeholder="Votre nom"
@@ -161,8 +112,6 @@ const ContactSection = () => {
                     type="email"
                     id="email"
                     name="email"
-                    value={formData.email}
-                    onChange={handleChange}
                     required
                     className="form-input"
                     placeholder="votre@email.com"
@@ -174,8 +123,6 @@ const ContactSection = () => {
                   <select
                     id="project"
                     name="project"
-                    value={formData.project}
-                    onChange={handleChange}
                     required
                     className="form-input"
                   >
@@ -192,8 +139,6 @@ const ContactSection = () => {
                   <textarea
                     id="message"
                     name="message"
-                    value={formData.message}
-                    onChange={handleChange}
                     required
                     className="form-input min-h-[120px]"
                     placeholder="Décrivez votre projet..."
@@ -203,15 +148,10 @@ const ContactSection = () => {
                 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
                   className="button-primary w-full flex items-center justify-center"
                 >
-                  {isSubmitting ? (
-                    <span className="inline-block h-4 w-4 border-2 border-white/50 border-t-white rounded-full animate-spin mr-2"></span>
-                  ) : (
-                    <Send size={18} className="mr-2" />
-                  )}
-                  {isSubmitting ? "Envoi en cours..." : "Envoyer le message"}
+                  <Send size={18} className="mr-2" />
+                  Envoyer le message
                 </button>
               </form>
             </div>

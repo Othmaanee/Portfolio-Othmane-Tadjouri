@@ -1,24 +1,26 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   
   useEffect(() => {
-    // Appliquer les animations immédiatement sans attendre
-    const childElements = document.querySelectorAll('.hero-animate');
-    
-    // Ajouter la classe 'revealed' à tous les éléments immédiatement
-    childElements.forEach((el, index) => {
-      // Ajouter une classe par défaut pour éviter le flash de contenu invisible
-      el.classList.add('opacity-100', 'translate-y-0');
+    // Ajouter un délai de 0.3s pour l'effet de pop-up
+    const timer = setTimeout(() => {
+      setIsVisible(true);
       
-      // Puis ajouter la classe revealed avec un léger délai séquentiel pour l'animation
-      setTimeout(() => {
-        el.classList.add('revealed');
-      }, 100 * index);
-    });
+      // Appliquer les animations avec effet séquentiel
+      const childElements = document.querySelectorAll('.hero-animate');
+      childElements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('revealed');
+        }, 100 * index);
+      });
+    }, 300); // délai de 0.3s demandé
+    
+    return () => clearTimeout(timer);
   }, []);
 
   const scrollToContact = () => {
@@ -29,12 +31,20 @@ const HeroSection = () => {
     document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Classes CSS conditionnelles pour l'animation
+  const heroClasses = isVisible 
+    ? 'opacity-100 translate-y-0 scale-100' 
+    : 'opacity-0 translate-y-4 scale-95';
+
   return (
     <section id="hero" className="min-h-screen flex items-center pt-20 pb-16 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-highlight/5 to-transparent opacity-30"></div>
       <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-tech/10 to-transparent opacity-30"></div>
       
-      <div ref={containerRef} className="container mx-auto px-4 z-10">
+      <div 
+        ref={containerRef} 
+        className={`container mx-auto px-4 z-10 transition-all duration-500 ${heroClasses}`}
+      >
         <div className="max-w-4xl">
           <span className="hero-animate text-highlight font-mono text-sm md:text-base opacity-100 translate-y-0 transition-all duration-700 delay-100 block mb-3">
             Bonjour, je suis
