@@ -15,7 +15,7 @@ const Index = () => {
     document.title = "Othmane Tadjouri | Développeur Web Freelance";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', 'Développeur web freelance, spécialisé dans la création de sites web et d\'applications web sur mesure, livrés en 72h.');
+      metaDescription.setAttribute('content', 'Développeur web freelance, spécialisé dans la création de sites web et d\'applications web sur mesure, livrés en 48h.');
     }
   }, []);
 
