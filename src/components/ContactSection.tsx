@@ -54,23 +54,49 @@ const ContactSection = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form submitted:', formData);
-      toast({
-        title: "Message envoyé !",
-        description: "Je vous répondrai dans les plus brefs délais.",
-      });
-      
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        project: '',
-        message: ''
-      });
-      setIsSubmitting(false);
-    }, 1500);
+    // Envoi du formulaire par email
+    const formElement = e.target as HTMLFormElement;
+    const formAction = `https://formsubmit.co/tadjouriothmane@gmail.com`;
+    
+    // Création d'un formulaire temporaire pour l'envoi
+    const tempForm = document.createElement('form');
+    tempForm.action = formAction;
+    tempForm.method = 'POST';
+    tempForm.style.display = 'none';
+    
+    // Ajout des champs du formulaire
+    Object.entries(formData).forEach(([key, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      tempForm.appendChild(input);
+    });
+    
+    // Ajout des options de configuration formSubmit
+    const redirectInput = document.createElement('input');
+    redirectInput.type = 'hidden';
+    redirectInput.name = '_next';
+    redirectInput.value = window.location.href + '#contact';
+    tempForm.appendChild(redirectInput);
+    
+    document.body.appendChild(tempForm);
+    tempForm.submit();
+    
+    // Afficher le toast
+    toast({
+      title: "Message en cours d'envoi",
+      description: "Vous allez être redirigé pour finaliser l'envoi.",
+    });
+    
+    // Reset form
+    setFormData({
+      name: '',
+      email: '',
+      project: '',
+      message: ''
+    });
+    setIsSubmitting(false);
   };
 
   return (
@@ -105,8 +131,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h4 className="text-sm text-muted-foreground mb-1">Téléphone</h4>
-                    <a href="tel:+33600000000" className="text-foreground hover:text-highlight transition-colors">
-                      +33 6 00 00 00 00
+                    <a href="tel:+33652959497" className="text-foreground hover:text-highlight transition-colors">
+                      +33 6 52 95 94 97
                     </a>
                   </div>
                 </div>

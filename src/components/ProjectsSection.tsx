@@ -5,33 +5,31 @@ import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 const projects = [
   {
     title: "EduKeeper.fr",
-    description: "Plateforme éducative permettant de suivre la progression des élèves, gérer les cours et faciliter la communication entre enseignants et parents.",
+    description: "EduKeeper est une application web qui permet aux utilisateurs de stocker, organiser et résumer automatiquement leurs documents grâce à l'IA.",
     image: "/placeholder.svg",
     tech: ["React", "Node.js", "MongoDB", "Express"],
-    link: "#",
+    link: "https://www.edukeeper.fr",
     featured: true
   },
   {
     title: "Airse Climate Solutions",
-    description: "Application web pour visualiser et analyser des données climatiques, offrant des insights pour des décisions durables.",
+    description: "Site vitrine professionnel présentant les services de climatisation et ventilation d'AirSE, avec formulaire, carte et photos réelles.",
     image: "/placeholder.svg",
     tech: ["Vue.js", "D3.js", "Python", "FastAPI"],
-    link: "https://preview--airse-climate-solutions.lovable.app/",
+    link: "https://airse.fr",
     featured: true
   },
   {
     title: "Dashboard Analytics",
     description: "Tableau de bord interactif permettant de visualiser des données complexes de manière simple et intuitive.",
     image: "/placeholder.svg",
-    tech: ["React", "Redux", "Tailwind CSS", "Chart.js"],
-    link: "#"
+    tech: ["React", "Redux", "Tailwind CSS", "Chart.js"]
   },
   {
     title: "E-commerce CMS",
     description: "Système de gestion de contenu pour une boutique en ligne avec gestion des produits, commandes et clients.",
     image: "/placeholder.svg",
-    tech: ["TypeScript", "Next.js", "Prisma", "PostgreSQL"],
-    link: "#"
+    tech: ["TypeScript", "Next.js", "Prisma", "PostgreSQL"]
   }
 ];
 
@@ -120,13 +118,6 @@ const ProjectsSection = () => {
                   <span key={tech} className="tech-tag">{tech}</span>
                 ))}
               </div>
-              <a 
-                href={project.link} 
-                className="inline-flex items-center text-highlight hover:text-white transition-colors"
-              >
-                <span>Plus de détails</span>
-                <ArrowRight size={16} className="ml-2" />
-              </a>
             </div>
           ))}
         </div>

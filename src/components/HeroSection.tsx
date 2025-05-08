@@ -6,30 +6,23 @@ const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('opacity-100');
-          entry.target.classList.remove('opacity-0', 'translate-y-10');
-        }
-      },
-      { threshold: 0.1 }
-    );
-    
+    // Ajouter une classe revealed à chaque élément avec la classe hero-animate au chargement
     const childElements = document.querySelectorAll('.hero-animate');
-    childElements.forEach(el => {
-      observer.observe(el);
-    });
-    
-    return () => {
-      childElements.forEach(el => {
-        observer.unobserve(el);
+    setTimeout(() => {
+      childElements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('revealed');
+        }, 150 * index);
       });
-    };
+    }, 300); // Petit délai pour s'assurer que les éléments sont chargés
   }, []);
 
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const scrollToServices = () => {
+    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
@@ -65,9 +58,9 @@ const HeroSection = () => {
               <ArrowRight size={16} />
             </button>
             
-            <a href="#contact" className="button-secondary">
-              Me contacter
-            </a>
+            <button onClick={scrollToServices} className="button-secondary">
+              Mes Services
+            </button>
           </div>
           
           <div className="hero-animate mt-16 md:mt-24 opacity-0 translate-y-10 transition-all duration-700 delay-600">
