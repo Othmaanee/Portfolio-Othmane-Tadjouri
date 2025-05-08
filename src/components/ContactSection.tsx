@@ -8,6 +8,22 @@ const ContactSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
+    // Vérifier si l'URL contient un paramètre de message de succès
+    const urlParams = new URLSearchParams(window.location.search);
+    const messageStatus = urlParams.get('message');
+    
+    if (messageStatus === 'success') {
+      toast({
+        title: "Message envoyé !",
+        description: "Votre message a bien été envoyé. Je vous répondrai dans les plus brefs délais.",
+        duration: 5000,
+      });
+      
+      // Nettoyer l'URL après avoir affiché le toast
+      const newUrl = window.location.pathname + window.location.hash;
+      window.history.replaceState({}, document.title, newUrl);
+    }
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -33,7 +49,7 @@ const ContactSection = () => {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
+  }, [toast]);
 
   return (
     <section id="contact" ref={sectionRef} className="py-20 md:py-32 bg-gradient-to-b from-card/70 to-background relative">
@@ -88,11 +104,20 @@ const ContactSection = () => {
                 action="https://formsubmit.co/tadjouriothmane@gmail.com" 
                 method="POST" 
                 className="glowing-border p-6 bg-card/80 backdrop-blur-sm"
+                onSubmit={() => {
+                  toast({
+                    title: "Envoi en cours...",
+                    description: "Votre message est en cours d'envoi.",
+                    duration: 2000,
+                  });
+                }}
               >
-                {/* Champs cachés pour formsubmit.co */}
+                {/* Configuration pour formsubmit.co */}
                 <input type="hidden" name="_subject" value="Nouveau message depuis votre portfolio" />
                 <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_next" value={window.location.origin + "/#contact?message=success"} />
+                <input type="text" name="_honey" style={{ display: 'none' }} /> {/* Honeypot pour les spams */}
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_next" value={`${window.location.origin}/#contact?message=success`} />
                 
                 <div className="mb-6">
                   <label htmlFor="name" className="block text-sm font-medium mb-2">Nom</label>
