@@ -6,7 +6,7 @@ const projects = [
   {
     title: "EduKeeper",
     description: "EduKeeper est une application web qui permet aux utilisateurs de stocker, organiser et résumer automatiquement leurs documents grâce à l'IA.",
-    image: "/lovable-uploads/6839c80a-16ad-41dc-8771-de01dadd9c41.png",
+    image: "/lovable-uploads/c6a6260e-b3d0-4a70-b6df-acef5b67e6b2.png",
     tech: ["React", "Node.js", "MongoDB", "Express"],
     link: "https://www.edukeeper.fr",
     featured: true
@@ -14,7 +14,7 @@ const projects = [
   {
     title: "AirSE",
     description: "Site vitrine professionnel présentant les services de climatisation et ventilation d'AirSE, avec formulaire, carte et photos réelles.",
-    image: "/lovable-uploads/e584ef3a-49c3-4178-b892-ee6618f826c9.png",
+    image: "/lovable-uploads/ae993ee7-ca28-48d5-8a86-7eeec47473d4.png",
     tech: ["Vue.js", "D3.js", "Python", "FastAPI"],
     link: "https://airse.fr",
     featured: true

@@ -20,7 +20,9 @@ const Footer = () => {
           
           <div className="flex items-center space-x-4">
             <a 
-              href="#"
+              href="https://github.com/Othmaanee"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-border/50 flex items-center justify-center text-muted-foreground hover:text-highlight hover:border-highlight transition-colors"
               aria-label="Github"
             >
@@ -34,7 +36,9 @@ const Footer = () => {
               <Mail size={18} />
             </a>
             <a 
-              href="#"
+              href="https://www.linkedin.com/in/othmane-tadjouri/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-border/50 flex items-center justify-center text-muted-foreground hover:text-highlight hover:border-highlight transition-colors"
               aria-label="LinkedIn"
             >
