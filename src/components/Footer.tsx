@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Github, Mail, Linkedin } from 'lucide-react';
 
@@ -14,7 +13,7 @@ const Footer = () => {
               <span className="text-highlight">/&gt;</span>
             </a>
             <p className="text-muted-foreground text-sm mt-2">
-              Solutions web sur-mesure, livrées en 72h.
+              Solutions web sur-mesure, livrées en 48h.
             </p>
           </div>
           
