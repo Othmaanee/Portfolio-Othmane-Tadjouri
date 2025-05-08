@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 
@@ -84,7 +85,7 @@ const ProjectsSection = () => {
                 <img 
                   src={project.image} 
                   alt={project.title}
-                  className={`object-contain opacity-30 ${project.title === "AirSE" ? "w-auto h-auto scale-[1.5]" : "w-32 h-32"}`}
+                  className={`object-contain opacity-30 ${project.title === "AirSE" ? "w-auto h-auto scale-[1.5] translate-y-6" : "w-32 h-32"}`}
                 />
               </div>
               <div className="w-full h-72"></div>
