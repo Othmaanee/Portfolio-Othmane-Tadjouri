@@ -50,53 +50,45 @@ const ContactSection = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Envoi du formulaire par email
-    const formElement = e.target as HTMLFormElement;
-    const formAction = `https://formsubmit.co/tadjouriothmane@gmail.com`;
-    
-    // Création d'un formulaire temporaire pour l'envoi
-    const tempForm = document.createElement('form');
-    tempForm.action = formAction;
-    tempForm.method = 'POST';
-    tempForm.style.display = 'none';
-    
-    // Ajout des champs du formulaire
-    Object.entries(formData).forEach(([key, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      tempForm.appendChild(input);
-    });
-    
-    // Ajout des options de configuration formSubmit
-    const redirectInput = document.createElement('input');
-    redirectInput.type = 'hidden';
-    redirectInput.name = '_next';
-    redirectInput.value = window.location.href + '#contact';
-    tempForm.appendChild(redirectInput);
-    
-    document.body.appendChild(tempForm);
-    tempForm.submit();
-    
-    // Afficher le toast
-    toast({
-      title: "Message en cours d'envoi",
-      description: "Vous allez être redirigé pour finaliser l'envoi.",
-    });
-    
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      project: '',
-      message: ''
-    });
-    setIsSubmitting(false);
+    try {
+      // Utiliser Formspree pour l'envoi du formulaire sans redirection
+      const response = await fetch('https://formspree.io/f/tadjouriothmane@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Message envoyé avec succès",
+          description: "Merci ! Je vous répondrai dès que possible.",
+        });
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          project: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Une erreur est survenue.');
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur d'envoi",
+        description: "Veuillez réessayer ou me contacter directement par email.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

@@ -6,15 +6,13 @@ const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
-    // Ajouter une classe revealed à chaque élément avec la classe hero-animate au chargement
+    // Déclencher les animations immédiatement au chargement de la page
     const childElements = document.querySelectorAll('.hero-animate');
-    setTimeout(() => {
-      childElements.forEach((el, index) => {
-        setTimeout(() => {
-          el.classList.add('revealed');
-        }, 150 * index);
-      });
-    }, 300); // Petit délai pour s'assurer que les éléments sont chargés
+    childElements.forEach((el, index) => {
+      setTimeout(() => {
+        el.classList.add('revealed');
+      }, 150 * index);
+    });
   }, []);
 
   const scrollToContact = () => {
