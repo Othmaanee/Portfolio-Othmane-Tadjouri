@@ -1,11 +1,14 @@
 
-import React, { useEffect, useRef } from 'react';
-import { Mail, Phone, Send } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Mail, Phone, Send, CheckCircle2 } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const ContactSection = () => {
   const { toast } = useToast();
   const sectionRef = useRef<HTMLElement>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   
   useEffect(() => {
     // Vérifier si l'URL contient un paramètre de message de succès
@@ -50,6 +53,49 @@ const ContactSection = () => {
       }
     };
   }, [toast]);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    toast({
+      title: "Envoi en cours...",
+      description: "Votre message est en cours d'envoi.",
+      duration: 2000,
+    });
+    
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/tadjouriothmane@gmail.com", {
+        method: "POST",
+        body: formData
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setFormSubmitted(true);
+        toast({
+          title: "Message envoyé !",
+          description: "Votre message a bien été envoyé. Je vous répondrai dans les plus brefs délais.",
+          duration: 5000,
+        });
+        
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+      } else {
+        throw new Error("Erreur lors de l'envoi du formulaire");
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur !",
+        description: "Une erreur est survenue lors de l'envoi de votre message. Veuillez réessayer.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    }
+  };
 
   return (
     <section id="contact" ref={sectionRef} className="py-20 md:py-32 bg-gradient-to-b from-card/70 to-background relative">
@@ -100,85 +146,86 @@ const ContactSection = () => {
             </div>
             
             <div className="reveal-on-scroll">
-              <form 
-                action="https://formsubmit.co/tadjouriothmane@gmail.com" 
-                method="POST" 
-                className="glowing-border p-6 bg-card/80 backdrop-blur-sm"
-                onSubmit={() => {
-                  toast({
-                    title: "Envoi en cours...",
-                    description: "Votre message est en cours d'envoi.",
-                    duration: 2000,
-                  });
-                }}
-              >
-                {/* Configuration pour formsubmit.co */}
-                <input type="hidden" name="_subject" value="Nouveau message depuis votre portfolio" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="text" name="_honey" style={{ display: 'none' }} /> {/* Honeypot pour les spams */}
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_next" value={`${window.location.origin}/#contact?message=success`} />
-                
-                <div className="mb-6">
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">Nom</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    className="form-input"
-                    placeholder="Votre nom"
-                  />
-                </div>
-                
-                <div className="mb-6">
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    className="form-input"
-                    placeholder="votre@email.com"
-                  />
-                </div>
-                
-                <div className="mb-6">
-                  <label htmlFor="project" className="block text-sm font-medium mb-2">Type de projet</label>
-                  <select
-                    id="project"
-                    name="project"
-                    required
-                    className="form-input"
-                  >
-                    <option value="">Sélectionnez une option</option>
-                    <option value="website">Site Web</option>
-                    <option value="webapp">Application Web</option>
-                    <option value="automation">Automatisation</option>
-                    <option value="other">Autre</option>
-                  </select>
-                </div>
-                
-                <div className="mb-6">
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    className="form-input min-h-[120px]"
-                    placeholder="Décrivez votre projet..."
-                    rows={5}
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  className="button-primary w-full flex items-center justify-center"
+              {formSubmitted ? (
+                <Alert className="glowing-border p-6 bg-card/80 backdrop-blur-sm border-green-400/30">
+                  <CheckCircle2 className="h-5 w-5 text-green-500" />
+                  <AlertDescription className="mt-4 text-lg font-medium">
+                    ✅ Merci pour votre message, je vous répondrai dans les plus brefs délais !
+                  </AlertDescription>
+                </Alert>
+              ) : (
+                <form 
+                  ref={formRef}
+                  onSubmit={handleSubmit}
+                  className="glowing-border p-6 bg-card/80 backdrop-blur-sm"
                 >
-                  <Send size={18} className="mr-2" />
-                  Envoyer le message
-                </button>
-              </form>
+                  {/* Configuration pour formsubmit.co */}
+                  <input type="hidden" name="_subject" value="Nouveau message depuis votre portfolio" />
+                  <input type="hidden" name="_captcha" value="false" />
+                  <input type="text" name="_honey" style={{ display: 'none' }} /> {/* Honeypot pour les spams */}
+                  <input type="hidden" name="_template" value="table" />
+                  
+                  <div className="mb-6">
+                    <label htmlFor="name" className="block text-sm font-medium mb-2">Nom</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      required
+                      className="form-input"
+                      placeholder="Votre nom"
+                    />
+                  </div>
+                  
+                  <div className="mb-6">
+                    <label htmlFor="email" className="block text-sm font-medium mb-2">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      required
+                      className="form-input"
+                      placeholder="votre@email.com"
+                    />
+                  </div>
+                  
+                  <div className="mb-6">
+                    <label htmlFor="project" className="block text-sm font-medium mb-2">Type de projet</label>
+                    <select
+                      id="project"
+                      name="project"
+                      required
+                      className="form-input"
+                    >
+                      <option value="">Sélectionnez une option</option>
+                      <option value="website">Site Web</option>
+                      <option value="webapp">Application Web</option>
+                      <option value="automation">Automatisation</option>
+                      <option value="other">Autre</option>
+                    </select>
+                  </div>
+                  
+                  <div className="mb-6">
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      className="form-input min-h-[120px]"
+                      placeholder="Décrivez votre projet..."
+                      rows={5}
+                    />
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    className="button-primary w-full flex items-center justify-center"
+                  >
+                    <Send size={18} className="mr-2" />
+                    Envoyer le message
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>

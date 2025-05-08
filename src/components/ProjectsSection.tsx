@@ -4,9 +4,9 @@ import { ArrowRight, ExternalLink, Github } from 'lucide-react';
 
 const projects = [
   {
-    title: "EduKeeper.fr",
+    title: "EduKeeper",
     description: "EduKeeper est une application web qui permet aux utilisateurs de stocker, organiser et résumer automatiquement leurs documents grâce à l'IA.",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/20ddb31a-953c-4985-860e-cc010cdf1c83.png",
     tech: ["React", "Node.js", "MongoDB", "Express"],
     link: "https://www.edukeeper.fr",
     featured: true
@@ -14,7 +14,7 @@ const projects = [
   {
     title: "Airse Climate Solutions",
     description: "Site vitrine professionnel présentant les services de climatisation et ventilation d'AirSE, avec formulaire, carte et photos réelles.",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/4bf3d02c-e4ae-4c6e-9c05-b51af78cab4e.png",
     tech: ["Vue.js", "D3.js", "Python", "FastAPI"],
     link: "https://airse.fr",
     featured: true
@@ -77,11 +77,14 @@ const ProjectsSection = () => {
               className="reveal-on-scroll glowing-border overflow-hidden relative card-hover"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="w-full h-72 object-cover object-center"
-              />
+              <div className="absolute inset-0 flex items-center justify-center z-0">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-32 h-32 object-contain opacity-30"
+                />
+              </div>
+              <div className="w-full h-72"></div>
               <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                 <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                 <p className="text-muted-foreground mb-4">{project.description}</p>
