@@ -60,7 +60,7 @@ const HeroSection = () => {
           
           <p className="hero-animate text-lg md:text-xl text-muted-foreground max-w-3xl mb-10 opacity-100 translate-y-0 transition-all duration-700 delay-400">
             Des solutions web sur-mesure, pensées pour durer, 
-            <span className="text-foreground font-medium"> livrées en 72h</span>, 
+            <span className="text-foreground font-medium"> livrées en 48h</span>, 
             avec un haut niveau de 
             <span className="text-foreground font-medium"> qualité</span> et de 
             <span className="text-foreground font-medium"> rigueur</span>.
